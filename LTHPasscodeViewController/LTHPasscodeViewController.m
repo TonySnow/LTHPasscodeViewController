@@ -1214,6 +1214,18 @@ options:NSNumericSearch] != NSOrderedAscending)
     }
     // App launch/Turning passcode off: Passcode OK -> dismiss, Passcode incorrect -> deny access.
     else {
+            
+        if ([self.delegate respondsToSelector:@selector(didEnterPasscode:)]) {
+            [self.delegate didEnterPasscode:typedString];
+            
+            [self _dismissMe];
+            _useFallbackPasscode = NO;
+            if ([self.delegate respondsToSelector: @selector(passcodeWasEnteredSuccessfully)]) {
+                [self.delegate performSelector: @selector(passcodeWasEnteredSuccessfully)];
+            }
+            return YES;
+        }
+        
         if ([typedString isEqualToString: savedPasscode]) {
             // Or, if you prefer by notifications:
             //            [[NSNotificationCenter defaultCenter] postNotificationName: @"passcodeWasEnteredSuccessfully"
