@@ -10,6 +10,8 @@
 
 @protocol LTHPasscodeViewControllerDelegate <NSObject>
 @optional
+
+- (void)didEnterPasscode:(NSString *)passcode;
 /**
  @brief Called right before the passcode view controller will be dismissed or popped.
  */
