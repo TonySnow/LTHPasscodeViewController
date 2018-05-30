@@ -557,9 +557,17 @@ options:NSNumericSearch] != NSOrderedAscending)
 #pragma mark - UI setup
 - (void)_setupNavBarWithLogoutTitle:(NSString *)logoutTitle {
     // Navigation Bar with custom UI
+    UIView *patchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, LTHMainWindow.frame.size.width, [LTHPasscodeViewController getStatusBarHeight])];
+    patchView.backgroundColor = self.navigationBarTintColor;
+    patchView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:patchView];
+
+    
     self.navBar =
-    [[UINavigationBar alloc] initWithFrame:CGRectMake(0, LTHMainWindow.frame.origin.y,
-                                                      LTHMainWindow.frame.size.width, 64)];
+    [[UINavigationBar alloc] initWithFrame:CGRectMake(0, patchView.frame.size.height,
+                                                      LTHMainWindow.frame.size.width, 44)];
+    self.navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
     self.navBar.tintColor = self.navigationTintColor;
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.navBar.barTintColor = self.navigationBarTintColor;
@@ -584,7 +592,7 @@ options:NSNumericSearch] != NSOrderedAscending)
     item.hidesBackButton = YES;
     
     [self.navBar pushNavigationItem:item animated:NO];
-    [LTHMainWindow addSubview:self.navBar];
+    [self.view addSubview:self.navBar];
 }
 
 - (void)_setupViews {
